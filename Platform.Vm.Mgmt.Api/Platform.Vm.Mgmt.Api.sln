@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AA14FFB0-8B02-4195-A4CA-FE745C38CE48}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{4B70861B-D49C-40D5-B1F0-A4E0BBC0A37A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{A3AC16A6-EE2E-4E11-AF7D-237DC15B04E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{9AB96AD6-8A64-4024-B733-86C725636324}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{DE3A2CA3-94CA-443E-A489-F8DE91CA3C60}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{255A4124-109D-4CC0-AAC5-70AB6F87B1D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platform.Vm.Mgmt.Domain", "Platform.Vm.Mgmt.Domain\Platform.Vm.Mgmt.Domain.csproj", "{73E25ECF-29A8-412D-8485-77F086AFEFF9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{73E25ECF-29A8-412D-8485-77F086AFEFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73E25ECF-29A8-412D-8485-77F086AFEFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73E25ECF-29A8-412D-8485-77F086AFEFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73E25ECF-29A8-412D-8485-77F086AFEFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A3AC16A6-EE2E-4E11-AF7D-237DC15B04E0} = {AA14FFB0-8B02-4195-A4CA-FE745C38CE48}
+		{9AB96AD6-8A64-4024-B733-86C725636324} = {AA14FFB0-8B02-4195-A4CA-FE745C38CE48}
+		{DE3A2CA3-94CA-443E-A489-F8DE91CA3C60} = {AA14FFB0-8B02-4195-A4CA-FE745C38CE48}
+		{255A4124-109D-4CC0-AAC5-70AB6F87B1D0} = {AA14FFB0-8B02-4195-A4CA-FE745C38CE48}
+		{73E25ECF-29A8-412D-8485-77F086AFEFF9} = {9AB96AD6-8A64-4024-B733-86C725636324}
+	EndGlobalSection
+EndGlobal
