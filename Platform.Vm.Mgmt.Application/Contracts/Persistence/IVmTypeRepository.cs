@@ -1,8 +1,6 @@
-﻿using Platform.Vm.Mgmt.Domain.Entities;
-
-namespace Platform.Vm.Mgmt.Application.Contracts.Persistence
+﻿namespace Platform.Vm.Mgmt.Application.Contracts.Persistence
 {
-    public interface IVmTypeRepository : IAsyncRepository<VmType>
+    public interface IVmTypeRepository : IAsyncRepository<Domain.Entities.VmType>
     {
     }
 }
