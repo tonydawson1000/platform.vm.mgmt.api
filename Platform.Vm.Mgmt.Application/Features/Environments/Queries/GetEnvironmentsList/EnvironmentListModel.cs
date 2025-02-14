@@ -7,6 +7,8 @@
         public string? Description { get; set; } = string.Empty;
         public bool? IsEnabled { get; set; }
 
+        public int? Tier { get; set; }
+
         public int? Sequence { get; set; }
     }
 }

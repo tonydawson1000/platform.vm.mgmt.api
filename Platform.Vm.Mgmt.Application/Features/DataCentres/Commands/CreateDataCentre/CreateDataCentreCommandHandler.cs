@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
 using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 
 namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataCentre
@@ -10,12 +12,19 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
         private readonly IMapper _mapper;
         private readonly IDataCentreRepository _dataCentreRepository;
 
+        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
+
         public CreateDataCentreCommandHandler(
             IMapper mapper,
-            IDataCentreRepository dataCentreRepository)
+            IDataCentreRepository dataCentreRepository,
+            IEmailService emailService,
+            INotificationService notificationService)
         {
             _mapper = mapper;
             _dataCentreRepository = dataCentreRepository;
+            _emailService = emailService;
+            _notificationService = notificationService;
         }
 
         public async Task<CreateDataCentreCommandResponse>
@@ -34,6 +43,8 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
                 {
                     createDataCentreCommandResponse.ValidationErrors.Add(error.ErrorMessage);
                 }
+
+                //TODO : TD - Plug in 'Validation Failure on Creation' Email/Notification here ...
             }
 
             if (createDataCentreCommandResponse.Success)
@@ -52,9 +63,39 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
                 var createDataCentreModel = _mapper.Map<CreateDataCentreModel>(dataCentre);
 
                 createDataCentreCommandResponse.CreateDataCentreModel = createDataCentreModel;
+
+                //TODO : TD - Plug in 'Creation Success' Email/Notification here ...
+
+                await SendCreationSuccessEmail(createDataCentreCommandResponse);
             }
 
             return createDataCentreCommandResponse;
+        }
+
+        private async Task<bool> SendCreationSuccessEmail(CreateDataCentreCommandResponse response)
+        {
+            var success = false;
+
+            try
+            {
+                var email = new Models.Email.Email()
+                {
+                    To = "noreply@myemail.com",
+                    Body = $"A new DataCentre was created: {response.CreateDataCentreModel}",
+                    Subject = "A new DataCentre was created"
+                };
+
+                success = await _emailService.SendEmail(email);
+            }
+            catch (Exception ex)
+            {
+                var str = ex.Message;
+
+                //Fire and Forget ...
+                //TODO : TD - Log it
+            }
+
+            return success;
         }
     }
 }

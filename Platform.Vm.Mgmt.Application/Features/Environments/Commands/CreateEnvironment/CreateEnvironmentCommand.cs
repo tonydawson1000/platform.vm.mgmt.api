@@ -8,6 +8,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
         public string Description { get; set; } = string.Empty;
         public bool IsEnabled { get; set; } = true;
 
+        public int? Tier { get; set; }
+
         public int Sequence { get; set; }
 
         public Guid DataCentreId { get; set; }

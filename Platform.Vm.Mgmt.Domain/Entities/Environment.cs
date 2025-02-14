@@ -9,6 +9,8 @@ namespace Platform.Vm.Mgmt.Domain.Entities
         public string? Description { get; set; }
         public bool? IsEnabled { get; set; }
 
+        public int? Tier { get; set; }
+
         public int? Sequence { get; set; }
 
         public Guid DataCentreId { get; set; }

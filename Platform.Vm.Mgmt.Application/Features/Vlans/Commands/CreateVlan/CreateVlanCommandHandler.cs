@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
 using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 
 namespace Platform.Vm.Mgmt.Application.Features.Vlans.Commands.CreateVlan
@@ -10,12 +12,19 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Commands.CreateVlan
         private readonly IMapper _mapper;
         private readonly IVlanRepository _vlanRepository;
 
+        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
+
         public CreateVlanCommandHandler(
             IMapper mapper,
-            IVlanRepository vlanRepository)
+            IVlanRepository vlanRepository,
+            IEmailService emailService,
+            INotificationService notificationService)
         {
             _mapper = mapper;
             _vlanRepository = vlanRepository;
+            _emailService = emailService;
+            _notificationService = notificationService;
         }
 
         public async Task<CreateVlanCommandResponse>
@@ -34,6 +43,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Commands.CreateVlan
                 {
                     createVlanCommandResponse.ValidationErrors.Add(error.ErrorMessage);
                 }
+
+                //TODO : TD - Plug in 'Validation Failure on Creation' Email/Notification here ...
             }
 
             if (createVlanCommandResponse.Success)
@@ -52,6 +63,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Commands.CreateVlan
                 var createVlanModel = _mapper.Map<CreateVlanModel>(vlan);
 
                 createVlanCommandResponse.CreateVlanModel = createVlanModel;
+
+                //TODO : TD - Plug in 'Creation Success' Email/Notification here ...
             }
 
             return createVlanCommandResponse;

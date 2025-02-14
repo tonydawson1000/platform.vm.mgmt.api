@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
 using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 
 namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvironment
@@ -10,12 +12,19 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
         private readonly IMapper _mapper;
         private readonly IEnvironmentRepository _environmentRepository;
 
+        private readonly IEmailService _emailService;
+        private readonly INotificationService _notificationService;
+
         public CreateEnvironmentCommandHandler(
             IMapper mapper,
-            IEnvironmentRepository environmentRepository)
+            IEnvironmentRepository environmentRepository,
+            IEmailService emailService,
+            INotificationService notificationService)
         {
             _mapper = mapper;
             _environmentRepository = environmentRepository;
+            _emailService = emailService;
+            _notificationService = notificationService;
         }
 
         public async Task<CreateEnvironmentCommandResponse>
@@ -34,6 +43,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
                 {
                     createEnvironmentCommandResponse.ValidationErrors.Add(error.ErrorMessage);
                 }
+
+                //TODO : TD - Plug in 'Validation Failure on Creation' Email/Notification here ...
             }
 
             if (createEnvironmentCommandResponse.Success)
@@ -44,6 +55,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
                     Description = request.Description,
                     IsEnabled = request.IsEnabled,
                     
+                    Tier = request.Tier,
+
                     Sequence = request.Sequence,
 
                     DataCentreId = request.DataCentreId
@@ -54,6 +67,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
                 var createEnvironmentModel = _mapper.Map<CreateEnvironmentModel>(environment);
 
                 createEnvironmentCommandResponse.CreateEnvironmentModel = createEnvironmentModel;
+
+                //TODO : TD - Plug in 'Creation Success' Email/Notification here ...
             }
 
             return createEnvironmentCommandResponse;

@@ -21,6 +21,10 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
                 .NotNull()
                 .MaximumLength(250).WithMessage("{PropertyName} must not exceed 250 characters.");
 
+            RuleFor(p => p.Tier)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .InclusiveBetween(1, 4).WithMessage("{PropertyName} must be between 1 and 4.");
+
             RuleFor(p => p.Sequence)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .GreaterThan(0);

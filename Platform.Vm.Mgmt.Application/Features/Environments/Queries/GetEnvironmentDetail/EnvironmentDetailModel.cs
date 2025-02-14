@@ -9,6 +9,8 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironm
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; } = string.Empty;
 
+        public int? Tier { get; set; }
+
         public int? Sequence { get; set; }
 
         public Guid DataCentreId { get; set; }
