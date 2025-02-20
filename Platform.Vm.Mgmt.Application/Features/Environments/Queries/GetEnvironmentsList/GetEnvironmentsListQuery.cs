@@ -2,7 +2,7 @@
 
 namespace Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentsList
 {
-    public class GetEnvironmentsListQuery : IRequest<List<EnvironmentListModel>>
+    public class GetEnvironmentsListQuery : IRequest<GetEnvironmentsListQueryResponse>
     {
     }
 }

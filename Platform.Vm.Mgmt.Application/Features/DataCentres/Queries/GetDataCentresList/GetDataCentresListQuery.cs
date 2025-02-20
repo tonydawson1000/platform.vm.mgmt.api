@@ -2,7 +2,7 @@
 
 namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresList
 {
-    public class GetDataCentresListQuery : IRequest<List<DataCentreListModel>>
+    public class GetDataCentresListQuery : IRequest<GetDataCentresListQueryResponse>
     {
     }
 }

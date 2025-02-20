@@ -2,7 +2,7 @@
 
 namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlansList
 {
-    public class GetVlansListQuery : IRequest<List<VlanListModel>>
+    public class GetVlansListQuery : IRequest<GetVlansListQueryResponse>
     {
     }
 }

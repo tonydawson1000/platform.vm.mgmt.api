@@ -5,7 +5,7 @@ using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresList
 {
     public class GetDataCentresListQueryHandler
-        : IRequestHandler<GetDataCentresListQuery, List<DataCentreListModel>>
+        : IRequestHandler<GetDataCentresListQuery, GetDataCentresListQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Domain.Entities.DataCentre> _dataCentreRepository;
@@ -18,14 +18,18 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentr
             _dataCentreRepository = dataCentreRepository;
         }
 
-        public async Task<List<DataCentreListModel>> 
+        public async Task<GetDataCentresListQueryResponse> 
             Handle(GetDataCentresListQuery request, CancellationToken cancellationToken)
         {
+            var getDataCentreListQueryResponse = new GetDataCentresListQueryResponse();
+
             var allDataCentres = (await _dataCentreRepository.ListAllAsync()).OrderBy(x => x.Name);
 
             var dataCentreListModels = _mapper.Map<List<DataCentreListModel>>(allDataCentres);
 
-            return dataCentreListModels;
+            getDataCentreListQueryResponse.DataCentreListModels = dataCentreListModels;
+
+            return getDataCentreListQueryResponse;
         }
     }
 }

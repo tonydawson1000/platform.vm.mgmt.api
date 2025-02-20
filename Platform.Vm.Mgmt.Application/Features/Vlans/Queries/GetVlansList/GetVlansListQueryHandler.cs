@@ -5,7 +5,7 @@ using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlansList
 {
     public class GetVlansListQueryHandler
-        : IRequestHandler<GetVlansListQuery, List<VlanListModel>>
+        : IRequestHandler<GetVlansListQuery, GetVlansListQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Domain.Entities.Vlan> _vlanRepository;
@@ -18,14 +18,18 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlansList
             _vlanRepository = vlanRepository;
         }
 
-        public async Task<List<VlanListModel>>
+        public async Task<GetVlansListQueryResponse>
             Handle(GetVlansListQuery request, CancellationToken cancellationToken)
         {
-            var allVlans = (await _vlanRepository.ListAllAsync()).OrderBy(x => x.Environment.Name);
+            var getVlansListQueryResponse = new GetVlansListQueryResponse();
+
+            var allVlans = (await _vlanRepository.ListAllAsync()).OrderBy(x => x.Name);
 
             var vlanListModels = _mapper.Map<List<VlanListModel>>(allVlans);
-           
-            return vlanListModels;
+
+            getVlansListQueryResponse.VlanListModels = vlanListModels;
+
+            return getVlansListQueryResponse;
         }
     }
 }

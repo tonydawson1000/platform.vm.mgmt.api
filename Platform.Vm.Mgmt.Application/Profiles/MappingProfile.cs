@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataCentre;
 using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentreDetail;
+using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresExport;
 using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresList;
+using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresListWithEnvironments;
 using Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvironment;
 using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentDetail;
 using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentsList;
@@ -17,9 +19,14 @@ namespace Platform.Vm.Mgmt.Application.Profiles
         public MappingProfile()
         {
             CreateMap<Domain.Entities.DataCentre, DataCentreListModel>().ReverseMap();
+            CreateMap<Domain.Entities.DataCentre, DataCentreWithEnvironmentsListModel>()
+                .ForMember(dest => dest.EnvironmentListModels, opt => opt.MapFrom(src => src.Environments));
+
             CreateMap<Domain.Entities.DataCentre, DataCentreDetailModel>().ReverseMap();
             CreateMap<Domain.Entities.DataCentre, CreateDataCentreCommand>().ReverseMap();
             CreateMap<Domain.Entities.DataCentre, CreateDataCentreModel>().ReverseMap();
+
+            CreateMap<Domain.Entities.DataCentre, DataCentreExportModel>();
 
             CreateMap<Domain.Entities.Environment, EnvironmentListModel>().ReverseMap();
             CreateMap<Domain.Entities.Environment, EnvironmentDetailModel>().ReverseMap();

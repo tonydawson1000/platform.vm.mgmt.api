@@ -6,7 +6,7 @@ using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironments
 namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentreDetail
 {
     public class GetDataCentreDetailQueryHandler
-        : IRequestHandler<GetDataCentreDetailQuery, DataCentreDetailModel>
+        : IRequestHandler<GetDataCentreDetailQuery, GetDataCentreDetailQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Domain.Entities.DataCentre> _dataCentreRepository;
@@ -22,9 +22,11 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentr
             _environmentRepository = environmentRepository;
         }
 
-        public async Task<DataCentreDetailModel>
+        public async Task<GetDataCentreDetailQueryResponse>
             Handle(GetDataCentreDetailQuery request, CancellationToken cancellationToken)
         {
+            var getDataCentreDetailQueryResponse = new GetDataCentreDetailQueryResponse();
+
             var dataCentre = await _dataCentreRepository.GetByIdAsync(request.Id);
             var dataCentreDetailModel = _mapper.Map<DataCentreDetailModel>(dataCentre);
 
@@ -36,7 +38,9 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentr
 
             dataCentreDetailModel.EnvironmentListModels = environmentListModels;
 
-            return dataCentreDetailModel;
+            getDataCentreDetailQueryResponse.DataCentreDetailModel = dataCentreDetailModel;
+
+            return getDataCentreDetailQueryResponse;
         }
     }
 }

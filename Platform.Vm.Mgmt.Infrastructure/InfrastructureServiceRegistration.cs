@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Export;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Notification;
 using Platform.Vm.Mgmt.Application.Models.Email;
 using Platform.Vm.Mgmt.Application.Models.Notification;
 using Platform.Vm.Mgmt.Infrastructure.Email;
+using Platform.Vm.Mgmt.Infrastructure.Export;
 using Platform.Vm.Mgmt.Infrastructure.Notification;
 
 namespace Platform.Vm.Mgmt.Infrastructure
@@ -17,6 +19,7 @@ namespace Platform.Vm.Mgmt.Infrastructure
             services.Configure<SlackSettings>(configuration.GetSection("SlackSettings"));
 
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ICsvFileExporter, CsvFileExporter>();
             services.AddTransient<ISlackNotificationService, SlackNotificationService>();
 
             return services;

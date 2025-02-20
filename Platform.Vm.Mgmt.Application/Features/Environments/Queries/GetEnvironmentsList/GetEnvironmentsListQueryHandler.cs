@@ -5,7 +5,7 @@ using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 namespace Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentsList
 {
     public class GetEnvironmentsListQueryHandler
-        : IRequestHandler<GetEnvironmentsListQuery, List<EnvironmentListModel>>
+        : IRequestHandler<GetEnvironmentsListQuery, GetEnvironmentsListQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Domain.Entities.Environment> _environmentRepository;
@@ -18,14 +18,18 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironm
             _environmentRepository = environmentRepository;
         }
 
-        public async Task<List<EnvironmentListModel>>
+        public async Task<GetEnvironmentsListQueryResponse>
             Handle(GetEnvironmentsListQuery request, CancellationToken cancellationToken)
         {
+            var getEnvironmentsListQueryResponse = new GetEnvironmentsListQueryResponse();
+
             var allEnvironments = (await _environmentRepository.ListAllAsync()).OrderBy(x => x.Sequence);
 
             var environmentListModels = _mapper.Map<List<EnvironmentListModel>>(allEnvironments);
 
-            return environmentListModels;
+            getEnvironmentsListQueryResponse.EnvironmentListModels = environmentListModels;
+
+            return getEnvironmentsListQueryResponse;
         }
     }
 }

@@ -6,7 +6,7 @@ using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironments
 namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail
 {
     public class GetVlanDetailQueryHandler
-        : IRequestHandler<GetVlanDetailQuery, VlanDetailModel>
+        : IRequestHandler<GetVlanDetailQuery, GetVlanDetailQueryResponse>
     {
         private readonly IMapper _mapper;
         private readonly IAsyncRepository<Domain.Entities.Vlan> _vlanRepository;
@@ -22,9 +22,11 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail
             _environmentRepository = environmentRepository;
         }
 
-        public async Task<VlanDetailModel>
+        public async Task<GetVlanDetailQueryResponse>
             Handle(GetVlanDetailQuery request, CancellationToken cancellationToken)
         {
+            var getVlanDetailQueryResponse = new GetVlanDetailQueryResponse();
+
             var vlan = await _vlanRepository.GetByIdAsync(request.Id);
             var vlanDetailModel = _mapper.Map<VlanDetailModel>(vlan);
 
@@ -33,7 +35,9 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail
 
             vlanDetailModel.EnvironmentListModel = environmentListModel;
 
-            return vlanDetailModel;
+            getVlanDetailQueryResponse.VlanDetailModel = vlanDetailModel;
+
+            return getVlanDetailQueryResponse;
         }
     }
 }

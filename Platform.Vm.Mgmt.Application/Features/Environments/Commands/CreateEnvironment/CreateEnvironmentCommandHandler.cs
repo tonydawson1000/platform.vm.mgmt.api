@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
-using Platform.Vm.Mgmt.Application.Contracts.Infrastructure;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
+using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Notification;
 using Platform.Vm.Mgmt.Application.Contracts.Persistence;
 
 namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvironment
@@ -13,18 +13,18 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvi
         private readonly IEnvironmentRepository _environmentRepository;
 
         private readonly IEmailService _emailService;
-        private readonly INotificationService _notificationService;
+        private readonly ISlackNotificationService _slackNotificationService;
 
         public CreateEnvironmentCommandHandler(
             IMapper mapper,
             IEnvironmentRepository environmentRepository,
             IEmailService emailService,
-            INotificationService notificationService)
+            ISlackNotificationService slackNotificationService)
         {
             _mapper = mapper;
             _environmentRepository = environmentRepository;
             _emailService = emailService;
-            _notificationService = notificationService;
+            _slackNotificationService = slackNotificationService;
         }
 
         public async Task<CreateEnvironmentCommandResponse>
