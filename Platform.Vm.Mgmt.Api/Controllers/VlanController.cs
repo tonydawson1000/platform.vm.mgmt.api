@@ -5,8 +5,9 @@ using Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlansList;
 
 namespace Platform.Vm.Mgmt.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Route("api/[controller]")]
     public class VlanController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,6 +27,8 @@ namespace Platform.Vm.Mgmt.Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetVlanById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetVlanDetailQueryResponse>> GetVlanById(Guid id)
         {
             var getVlanDetailQuery = new GetVlanDetailQuery()

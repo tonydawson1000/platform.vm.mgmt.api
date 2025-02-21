@@ -8,8 +8,9 @@ using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresLi
 
 namespace Platform.Vm.Mgmt.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Route("api/[controller]")]
     public class DataCentreController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -29,7 +30,6 @@ namespace Platform.Vm.Mgmt.Api.Controllers
         }
 
         [HttpGet("allwithenvironments", Name = "GetDataCentresWithEnvironments")]
-        [ProducesDefaultResponseType]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<GetDataCentresWithEnvironmentsListQueryResponse>> GetDataCentresWithEnvironments(bool includeDisabledEnvironments)
         {
@@ -44,6 +44,8 @@ namespace Platform.Vm.Mgmt.Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetDataCentreById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetDataCentreDetailQueryResponse>> GetDataCentreById(Guid id)
         {
             var getDataCentreDetailQuery = new GetDataCentreDetailQuery()

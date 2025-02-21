@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Platform.Vm.Mgmt.Api.Middleware;
 using Platform.Vm.Mgmt.Application;
 using Platform.Vm.Mgmt.Infrastructure;
 using Platform.Vm.Mgmt.Persistence.EfCore;
@@ -15,6 +16,8 @@ namespace Platform.Vm.Mgmt.Api
             builder.Services.AddInfrastructureServices(builder.Configuration);
             builder.Services.AddPersistenceServices(builder.Configuration);
 
+            builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddControllers();
 
             builder.Services.AddCors(
@@ -27,7 +30,8 @@ namespace Platform.Vm.Mgmt.Api
             .AllowAnyHeader()
             .AllowCredentials()));
 
-       //     builder.Services.AddSwaggerGen();
+            builder.Services.AddEndpointsApiExplorer();
+            //     builder.Services.AddSwaggerGen();
 
             return builder.Build();
         }
@@ -42,6 +46,8 @@ namespace Platform.Vm.Mgmt.Api
             //    app.UseSwagger();
             //    app.UseSwaggerUI();
             //}
+
+            app.UseCustomExceptionHandler();
 
             app.UseHttpsRedirection();
             app.MapControllers();

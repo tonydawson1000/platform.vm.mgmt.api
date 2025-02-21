@@ -5,8 +5,9 @@ using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironments
 
 namespace Platform.Vm.Mgmt.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [ApiConventionType(typeof(DefaultApiConventions))]
+    [Route("api/[controller]")]
     public class EnvironmentController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -26,6 +27,8 @@ namespace Platform.Vm.Mgmt.Api.Controllers
         }
 
         [HttpGet("{id}", Name = "GetEnvironmentById")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetEnvironmentDetailQueryResponse>> GetEnvironmentById(Guid id)
         {
             var getEnvironmentDetailQuery = new GetEnvironmentDetailQuery()

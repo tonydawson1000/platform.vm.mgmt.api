@@ -1,14 +1,17 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Notification;
 using Platform.Vm.Mgmt.Application.Contracts.Persistence;
+using Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail;
 
 namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataCentre
 {
     public class CreateDataCentreCommandHandler
         : IRequestHandler<CreateDataCentreCommand, CreateDataCentreCommandResponse>
     {
+        private readonly ILogger<CreateDataCentreCommandHandler> _logger;
         private readonly IMapper _mapper;
         private readonly IDataCentreRepository _dataCentreRepository;
 
@@ -16,11 +19,13 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
         private readonly ISlackNotificationService _slackNotificationService;
 
         public CreateDataCentreCommandHandler(
+            ILogger<CreateDataCentreCommandHandler> logger,
             IMapper mapper,
             IDataCentreRepository dataCentreRepository,
             IEmailService emailService,
             ISlackNotificationService slackNotificationService)
         {
+            _logger = logger;
             _mapper = mapper;
             _dataCentreRepository = dataCentreRepository;
             _emailService = emailService;
@@ -44,7 +49,7 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
                     createDataCentreCommandResponse.ValidationErrors.Add(error.ErrorMessage);
                 }
 
-                //TODO : TD - Plug in 'Validation Failure on Creation' Email/Notification here ...
+                _logger.LogWarning($"*** CreateDataCentreCommandHandler - DataCentre Validation Failed: {createDataCentreCommandResponse.ValidationErrors}");
             }
 
             if (createDataCentreCommandResponse.Success)
@@ -64,7 +69,7 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
 
                 createDataCentreCommandResponse.CreateDataCentreModel = createDataCentreModel;
 
-                //TODO : TD - Plug in 'Creation Success' Email/Notification here ...
+                _logger.LogInformation($"*** CreateDataCentreCommandHandler - DataCentre {dataCentre.Name} was created.");
 
                 await SendCreationSuccessEmail(createDataCentreCommandResponse);
             }
@@ -89,10 +94,7 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
             }
             catch (Exception ex)
             {
-                var str = ex.Message;
-
-                //Fire and Forget ...
-                //TODO : TD - Log it
+                _logger.LogError($"*** CreateDataCentreCommandHandler : SendCreationSuccessEmail ({response.CreateDataCentreModel.Name}) - Error sending email: {ex.Message}");
             }
 
             return success;
