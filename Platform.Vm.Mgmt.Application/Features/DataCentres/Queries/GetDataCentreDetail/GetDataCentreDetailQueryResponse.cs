@@ -6,6 +6,6 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentr
     {
         public GetDataCentreDetailQueryResponse() : base() { }
 
-        public DataCentreDetailModel DataCentreDetailModel { get; set; }
+        public DataCentreDetailModel? DataCentreDetailModel { get; set; }
     }
 }

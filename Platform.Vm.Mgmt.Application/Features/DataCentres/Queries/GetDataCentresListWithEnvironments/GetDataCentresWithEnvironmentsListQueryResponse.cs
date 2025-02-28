@@ -6,6 +6,6 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentr
     {
         public GetDataCentresWithEnvironmentsListQueryResponse() : base() { }
 
-        public List<DataCentreWithEnvironmentsListModel> DataCentreWithEnvironmentsListModels { get; set; }
+        public List<DataCentreWithEnvironmentsListModel>? DataCentreWithEnvironmentsListModels { get; set; }
     }
 }

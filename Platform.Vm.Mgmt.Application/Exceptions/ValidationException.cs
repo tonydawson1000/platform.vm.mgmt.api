@@ -7,6 +7,7 @@ namespace Platform.Vm.Mgmt.Application.Exceptions
         public List<string> ValdationErrors { get; set; }
 
         public ValidationException(ValidationResult validationResult)
+            : base("Validation Errors Occurred.")
         {
             ValdationErrors = new List<string>();
 

@@ -5,6 +5,6 @@
         Task<bool> IsEnvironmentNameUnique(string name);
         Task<bool> IsEnvironmentSequenceUnique(int sequence);
 
-        Task<List<Domain.Entities.Vlan>> GetEnvironmentsWithVlans(bool includeDisabledVlans);
+        Task<IEnumerable<Domain.Entities.Vlan>> GetEnvironmentsWithVlansAsync(bool includeDisabledVlans);
     }
 }

@@ -6,6 +6,6 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlansList
     {
         public GetVlansListQueryResponse() : base() { }
 
-        public List<VlanListModel> VlanListModels { get; set; }
+        public List<VlanListModel>? VlanListModels { get; set; }
     }
 }

@@ -18,6 +18,9 @@ builder.Host.UseSerilog(
           .WriteTo.Console(),
       true);
 
+// Throttle the 'Thread Pool' (set to the number of processors)
+// ThreadPool.SetMaxThreads(Environment.ProcessorCount, Environment.ProcessorCount);
+
 var app = builder
        .ConfigureServices()
        .ConfigurePipeline();

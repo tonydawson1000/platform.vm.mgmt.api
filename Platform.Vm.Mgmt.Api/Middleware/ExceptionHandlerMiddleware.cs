@@ -39,7 +39,7 @@ namespace Platform.Vm.Mgmt.Api.Middleware
                 case Application.Exceptions.ValidationException validationException:
                     httpStatusCode = HttpStatusCode.BadRequest;
                     response.ValidationErrors = validationException.ValdationErrors;
-                    response.Message = $"error : {httpStatusCode} : {exception.Message}";
+                    response.Message = $"error : {httpStatusCode} : {validationException.Message}";
                     
                     break;
                 case Application.Exceptions.BadRequestException badRequestException:

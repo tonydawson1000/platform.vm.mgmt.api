@@ -9,10 +9,12 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Repositories
         {
         }
 
-        public async Task<List<Domain.Entities.DataCentre>> GetDataCentresWithEnvironments(bool includeDisabledEnvironments)
+        public async Task<IEnumerable<Domain.Entities.DataCentre>> GetDataCentresWithEnvironmentsAsync(bool includeDisabledEnvironments)
         {
             var allDataCentresWithEnvironments =
-                await _dbContext.DataCentres.Include(dc => dc.Environments).ToListAsync();
+                await _dbContext.DataCentres
+                .Include(dc => dc.Environments)
+                .ToListAsync();
 
             if(!includeDisabledEnvironments)
             {

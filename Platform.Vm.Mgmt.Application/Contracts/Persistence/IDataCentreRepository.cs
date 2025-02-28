@@ -4,6 +4,6 @@
     {
         Task<bool> IsDataCentreNameUnique(string name);
 
-        Task<List<Domain.Entities.DataCentre>> GetDataCentresWithEnvironments(bool includeDisabledEnvironments);
+        Task<IEnumerable<Domain.Entities.DataCentre>> GetDataCentresWithEnvironmentsAsync(bool includeDisabledEnvironments);
     }
 }

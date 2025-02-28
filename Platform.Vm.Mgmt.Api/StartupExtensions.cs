@@ -3,6 +3,7 @@ using Platform.Vm.Mgmt.Api.Middleware;
 using Platform.Vm.Mgmt.Application;
 using Platform.Vm.Mgmt.Infrastructure;
 using Platform.Vm.Mgmt.Persistence.EfCore;
+using Serilog;
 
 namespace Platform.Vm.Mgmt.Api
 {
@@ -31,7 +32,8 @@ namespace Platform.Vm.Mgmt.Api
             .AllowCredentials()));
 
             builder.Services.AddEndpointsApiExplorer();
-            //     builder.Services.AddSwaggerGen();
+
+            builder.Services.AddOpenApi();
 
             return builder.Build();
         }
@@ -41,11 +43,15 @@ namespace Platform.Vm.Mgmt.Api
 
             app.UseCors("open");
 
-            //if (app.Environment.IsDevelopment())
-            //{
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
+            if (app.Environment.IsDevelopment())
+            {
+                app.MapOpenApi();
+
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/openapi/v1.json", "v1");
+                });
+            }
 
             app.UseCustomExceptionHandler();
 
@@ -69,7 +75,7 @@ namespace Platform.Vm.Mgmt.Api
             }
             catch (Exception ex)
             {
-                //add logging here later on
+                Log.Error(ex, "An error occurred while resetting the database.");
             }
         }
     }

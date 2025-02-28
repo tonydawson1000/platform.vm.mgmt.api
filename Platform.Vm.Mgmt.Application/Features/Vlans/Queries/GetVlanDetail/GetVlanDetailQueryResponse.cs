@@ -6,6 +6,6 @@ namespace Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail
     {
         public GetVlanDetailQueryResponse() : base() { }
 
-        public VlanDetailModel VlanDetailModel { get; set; }
+        public VlanDetailModel? VlanDetailModel { get; set; }
     }
 }

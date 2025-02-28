@@ -9,7 +9,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Repositories
         {
         }
 
-        public Task<List<Vlan>> GetEnvironmentsWithVlans(bool includeDisabledVlans)
+        public Task<IEnumerable<Vlan>> GetEnvironmentsWithVlansAsync(bool includeDisabledVlans)
         {
             throw new NotImplementedException();
         }

@@ -6,6 +6,6 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironm
     {
         public GetEnvironmentsListQueryResponse() : base() { }
 
-        public List<EnvironmentListModel> EnvironmentListModels { get; set; }
+        public List<EnvironmentListModel>? EnvironmentListModels { get; set; }
     }
 }

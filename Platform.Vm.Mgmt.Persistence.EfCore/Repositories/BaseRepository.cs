@@ -12,7 +12,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Repositories
             _dbContext = dbContext;
         }
 
-        public virtual async Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T?> GetByIdAsync(Guid id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
         }

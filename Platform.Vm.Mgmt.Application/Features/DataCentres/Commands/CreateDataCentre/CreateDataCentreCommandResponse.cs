@@ -6,6 +6,8 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
     {
         public CreateDataCentreCommandResponse() : base() { }
 
+        public Guid DataCentreId { get; set; }
+
         public CreateDataCentreModel CreateDataCentreModel { get; set; } = default!;
     }
 }

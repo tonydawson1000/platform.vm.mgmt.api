@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Email;
 using Platform.Vm.Mgmt.Application.Contracts.Infrastructure.Notification;
 using Platform.Vm.Mgmt.Application.Contracts.Persistence;
-using Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail;
+using Platform.Vm.Mgmt.Application.Exceptions;
 
 namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataCentre
 {
@@ -42,14 +42,10 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
 
             if (validationResult.Errors.Count > 0)
             {
-                createDataCentreCommandResponse.Success = false;
-                createDataCentreCommandResponse.ValidationErrors = new List<string>();
-                foreach (var error in validationResult.Errors)
-                {
-                    createDataCentreCommandResponse.ValidationErrors.Add(error.ErrorMessage);
-                }
 
                 _logger.LogWarning($"*** CreateDataCentreCommandHandler - DataCentre Validation Failed: {createDataCentreCommandResponse.ValidationErrors}");
+
+                throw new ValidationException(validationResult);
             }
 
             if (createDataCentreCommandResponse.Success)
@@ -64,6 +60,8 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
                 };
 
                 dataCentre = await _dataCentreRepository.AddAsync(dataCentre);
+
+                createDataCentreCommandResponse.DataCentreId = dataCentre.Id;
 
                 var createDataCentreModel = _mapper.Map<CreateDataCentreModel>(dataCentre);
 

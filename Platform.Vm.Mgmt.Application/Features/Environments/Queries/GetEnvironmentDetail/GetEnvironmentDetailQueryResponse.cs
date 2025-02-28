@@ -6,6 +6,6 @@ namespace Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironm
     {
         public GetEnvironmentDetailQueryResponse() : base() { }
 
-        public EnvironmentDetailModel EnvironmentDetailModel { get; set; }
+        public EnvironmentDetailModel? EnvironmentDetailModel { get; set; }
     }
 }

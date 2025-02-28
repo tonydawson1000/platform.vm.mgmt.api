@@ -23,7 +23,7 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentr
         {
             var getDataCentresWithEnvironmentsListQueryResponse = new GetDataCentresWithEnvironmentsListQueryResponse();
 
-            var allDataCentresWithEnvironments = await _dataCentreRepository.GetDataCentresWithEnvironments(request.IncludeDisabledEnvironments);
+            var allDataCentresWithEnvironments = await _dataCentreRepository.GetDataCentresWithEnvironmentsAsync(request.IncludeDisabledEnvironments);
 
             var dataCentreWithEnvironmentsListModels = _mapper.Map<List<DataCentreWithEnvironmentsListModel>>(allDataCentresWithEnvironments);
 

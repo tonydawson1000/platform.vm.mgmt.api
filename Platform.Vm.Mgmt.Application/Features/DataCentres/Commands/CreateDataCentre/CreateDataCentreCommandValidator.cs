@@ -29,7 +29,7 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
 
             RuleFor(e => e)
                 .MustAsync(DataCentreNameUnique)
-                .WithMessage("A 'DataCentre' with that Name - '{p.Name}' - already exists.");
+                .WithMessage("A 'DataCentre' Name must be unique.");
         }
 
         private async Task<bool> DataCentreNameUnique(CreateDataCentreCommand dc, CancellationToken cancellationToken)
