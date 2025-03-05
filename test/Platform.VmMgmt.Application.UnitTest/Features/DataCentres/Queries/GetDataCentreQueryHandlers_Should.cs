@@ -13,10 +13,10 @@ namespace Platform.VmMgmt.Application.UnitTest.Features.DataCentres.Queries
 {
     public class GetDataCentreQueryHandlers_Should
     {
-        private readonly IMapper _mapper;
-        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.DataCentre>> _mockDataCentreRepository;
-        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Environment>> _mockEnvironmentRepository;
         private readonly Mock<ILogger<GetDataCentreDetailQueryHandler>> _logger;
+        private readonly Mock<IDataCentreRepository> _mockDataCentreRepository;
+        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Environment>> _mockEnvironmentRepository;
+        private readonly IMapper _mapper;
 
         public GetDataCentreQueryHandlers_Should()
         {

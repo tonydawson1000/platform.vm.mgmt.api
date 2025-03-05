@@ -13,10 +13,10 @@ namespace Platform.VmMgmt.Application.UnitTest.Features.Vlans.Queries
 {
     public class GetVlanQueryHandler_Should
     {
-        private readonly IMapper _mapper;
-        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Environment>> _mockEnvironmentRepository;
-        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Vlan>> _mockVlanRepository;
         private readonly Mock<ILogger<GetVlanDetailQueryHandler>> _logger;
+        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Vlan>> _mockVlanRepository;
+        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Environment>> _mockEnvironmentRepository;
+        private readonly IMapper _mapper;
 
         public GetVlanQueryHandler_Should()
         {

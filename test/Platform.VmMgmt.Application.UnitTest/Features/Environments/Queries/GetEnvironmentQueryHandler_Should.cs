@@ -13,11 +13,11 @@ namespace Platform.VmMgmt.Application.UnitTest.Features.Environments.Queries
 {
     public class GetEnvironmentQueryHandler_Should
     {
-        private readonly IMapper _mapper;
-        private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.DataCentre>> _mockDataCentreRepository;
+        private readonly Mock<ILogger<GetEnvironmentDetailQueryHandler>> _logger;
+        private readonly Mock<IDataCentreRepository> _mockDataCentreRepository;
         private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Environment>> _mockEnvironmentRepository;
         private readonly Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Vlan>> _mockVlanRepository;
-        private readonly Mock<ILogger<GetEnvironmentDetailQueryHandler>> _logger;
+        private readonly IMapper _mapper;
 
         public GetEnvironmentQueryHandler_Should()
         {

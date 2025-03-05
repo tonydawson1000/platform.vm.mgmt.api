@@ -13,7 +13,7 @@ namespace Platform.Vm.Mgmt.Infrastructure.Notification
             _slackSettings = slackSettings.Value;
         }
 
-        public Task<bool> SendNotification(Application.Models.Notification.SlackNotification slackNotification)
+        public Task<bool> SendNotification(SlackNotification slackNotification)
         {
             throw new NotImplementedException();
         }

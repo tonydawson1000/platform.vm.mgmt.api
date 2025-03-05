@@ -5,9 +5,30 @@ namespace Platform.VmMgmt.Application.UnitTest.Mocks
 {
     public class RepositoryMocks
     {
-        public static Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.DataCentre>> GetDataCentreRepository()
+        public static Mock<IDataCentreRepository> GetDataCentreRepository()
         {
-            var dataCentres = new List<Vm.Mgmt.Domain.Entities.DataCentre>
+            var dataCentres = PopulateDummyDataCentreData();
+
+            var mockDataCentreRepository = new Mock<IDataCentreRepository>();
+
+            mockDataCentreRepository.Setup(repo => repo.ListAllAsync()).ReturnsAsync(dataCentres);
+
+            mockDataCentreRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
+                .ReturnsAsync((Guid id) => dataCentres.FirstOrDefault(x => x.Id == id));
+
+            mockDataCentreRepository.Setup(repo => repo.AddAsync(It.IsAny<Vm.Mgmt.Domain.Entities.DataCentre>()))
+                .ReturnsAsync((Vm.Mgmt.Domain.Entities.DataCentre dataCentre) =>
+                {
+                    dataCentres.Add(dataCentre);
+                    return dataCentre;
+                });
+
+            return mockDataCentreRepository;
+        }
+
+        private static List<Vm.Mgmt.Domain.Entities.DataCentre> PopulateDummyDataCentreData()
+        {
+            return new List<Vm.Mgmt.Domain.Entities.DataCentre>
             {
                 new Vm.Mgmt.Domain.Entities.DataCentre
                 {
@@ -48,15 +69,6 @@ namespace Platform.VmMgmt.Application.UnitTest.Mocks
                     }
                 }
             };
-
-            var mockDataCentreRepository = new Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.DataCentre>>();
-
-            mockDataCentreRepository.Setup(repo => repo.ListAllAsync()).ReturnsAsync(dataCentres);
-
-            mockDataCentreRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync((Guid id) => dataCentres.FirstOrDefault(x => x.Id == id));
-
-            return mockDataCentreRepository;
         }
 
         public static Mock<IAsyncRepository<Vm.Mgmt.Domain.Entities.Environment>> GetEnvironmentRepository()
