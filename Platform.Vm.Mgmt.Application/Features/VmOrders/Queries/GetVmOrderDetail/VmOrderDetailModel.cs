@@ -1,8 +1,8 @@
-﻿using Platform.Vm.Mgmt.Domain.Common;
+﻿using Platform.Vm.Mgmt.Application.Features.VmOrders.Queries.GetVmOrdersList;
 
-namespace Platform.Vm.Mgmt.Domain.Entities
+namespace Platform.Vm.Mgmt.Application.Features.VmOrders.Queries.GetVmOrderDetail
 {
-    public class VmOrder : AuditableEntity
+    public class VmOrderDetailModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -11,15 +11,13 @@ namespace Platform.Vm.Mgmt.Domain.Entities
         public DateTime VmOrderPlaced { get; set; }
 
         public Guid EnvironmentId { get; set; }
-        public Environment Environment { get; set; } = default!;
 
-        public Guid TimeZoneId {  get; set; }
-        public TimeZone TimeZone { get; set; } = default!;
+        public Guid TimeZoneId { get; set; }
 
         public string? PrimaryContactName { get; set; }
         public string? PrimaryContactEmail { get; set; }
         public string? TeamName { get; set; }
 
-        public ICollection<VmOrderDetail>? VmOrderDetails { get; set; }
+        public ICollection<VmOrderDetailListModel>? VmOrderDetailListModels { get; set; }
     }
 }

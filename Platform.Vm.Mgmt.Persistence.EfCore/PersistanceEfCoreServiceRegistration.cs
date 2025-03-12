@@ -15,9 +15,15 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
-            services.AddScoped<IDataCentreRepository, DataCentreRepository>();
-            services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
+            services.AddScoped<IVmOrderRepository, VmOrderRepository>();
+
+            services.AddScoped<IVmSizeRepository, VmSizeRepository>();
+            services.AddScoped<IVmTypeRepository, VmTypeRepository>();
+            services.AddScoped<ITimeZoneRepository, TimeZoneRepository>();
+
             services.AddScoped<IVlanRepository, VlanRepository>();
+            services.AddScoped<IEnvironmentRepository, EnvironmentRepository>();
+            services.AddScoped<IDataCentreRepository, DataCentreRepository>();
 
             return services;
         }

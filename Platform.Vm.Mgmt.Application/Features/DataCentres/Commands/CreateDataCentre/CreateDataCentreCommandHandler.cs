@@ -42,7 +42,6 @@ namespace Platform.Vm.Mgmt.Application.Features.DataCentres.Commands.CreateDataC
 
             if (validationResult.Errors.Count > 0)
             {
-
                 _logger.LogWarning($"*** CreateDataCentreCommandHandler - DataCentre Validation Failed: {createDataCentreCommandResponse.ValidationErrors}");
 
                 throw new ValidationException(validationResult);

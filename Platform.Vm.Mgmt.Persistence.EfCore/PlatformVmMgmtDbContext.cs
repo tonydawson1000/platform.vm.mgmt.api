@@ -8,20 +8,54 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
         public PlatformVmMgmtDbContext(DbContextOptions<PlatformVmMgmtDbContext> options)
             : base(options) { }
 
-        public DbSet<Domain.Entities.DataCentre> DataCentres { get; set; }
-        public DbSet<Domain.Entities.Environment> Environments { get; set; }
+        public DbSet<Domain.Entities.VmOrderDetail> VmOrderDetails { get; set; }
+        public DbSet<Domain.Entities.VmOrder> VmOrders { get; set; }
+
+
+        public DbSet<Domain.Entities.VmSize> VmSizes { get; set; }
+        public DbSet<Domain.Entities.VmType> VmTypes { get; set; }
+        public DbSet<Domain.Entities.TimeZone> TimeZones { get; set; }
+
         public DbSet<Domain.Entities.Vlan> Vlans { get; set; }
+        public DbSet<Domain.Entities.Environment> Environments { get; set; }
+        public DbSet<Domain.Entities.DataCentre> DataCentres { get; set; }
 
-        private Guid DcShGuid = Guid.Parse("{D18519B3-4B35-4D5A-8720-2593881615E5}");
-        private Guid DcPgGuid = Guid.Parse("{D28519B3-4B35-4D5A-8720-2593881615E5}");
-        private Guid DcMa4Guid = Guid.Parse("{D38519B3-4B35-4D5A-8720-2593881615E5}");
 
-        private Guid EnvDevGuid = Guid.Parse("{E1B64577-1C93-4D83-A160-D0C100B75C0C}");
-        private Guid EnvOatGuid = Guid.Parse("{E2B64577-1C93-4D83-A160-D0C100B75C0C}");
-        private Guid EnvUatGuid = Guid.Parse("{E3B64577-1C93-4D83-A160-D0C100B75C0C}");
-        private Guid EnvProdGuid = Guid.Parse("{E4B64577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid VmSizeSmall = Guid.Parse("{A1B74577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid VmSizeMedium = Guid.Parse("{A2B74577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid VmSizeLarge = Guid.Parse("{A3B74577-1C93-4D83-A160-D0C100B75C0C}");
 
-        private Guid Vlan113Guid = Guid.Parse("{113D0837-E1E4-4078-8DA3-9F62A4C33C58}");
+        private readonly Guid VmTypeRhel8 = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid VmTypeRhel9 = Guid.Parse("{A2B64577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid VmTypeRhel10 = Guid.Parse("{A3B64577-1C93-4D83-A160-D0C100B75C0C}");
+
+        private readonly Guid TimeZoneEuropeLondon = Guid.Parse("{A1B54577-1C93-4D83-A160-D0C100B75C0C}");
+
+
+        //private readonly Guid Vlan0Guid = Guid.Parse("{000D0837-E1E4-4078-8DA3-9F62A4C33C58}");   //NO! - DEPRECIATED - DO NOT USE
+
+        private readonly Guid Vlan113Guid = Guid.Parse("{113D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN in DEV
+        private readonly Guid Vlan155Guid = Guid.Parse("{155D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN in UAT
+        //private readonly Guid Vlan156Guid = Guid.Parse("{156D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN in CERT - Not Needed ?
+
+        //private readonly Guid Vlan450Guid = Guid.Parse("{450D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN for HVMON-SH - Not Needed ?
+        //private readonly Guid Vlan451Guid = Guid.Parse("{451D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN for HVMON-PG - Not Needed ?
+
+        private readonly Guid Vlan600Guid = Guid.Parse("{600D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN in PROD
+        //private readonly Guid Vlan601Guid = Guid.Parse("{601D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN for PG APP Servers - PG - Not Needed ?
+        //private readonly Guid Vlan602Guid = Guid.Parse("{602D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN for AZDO Agents - PG - Not Needed ?
+        //private readonly Guid Vlan607Guid = Guid.Parse("{607D0837-E1E4-4078-8DA3-9F62A4C33C58}"); //VLAN for SH APP Servers - SH - Not Needed ?
+
+
+        private readonly Guid EnvDevGuid = Guid.Parse("{E1B64577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid EnvOatGuid = Guid.Parse("{E2B64577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid EnvUatGuid = Guid.Parse("{E3B64577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid EnvProdGuid = Guid.Parse("{E4B64577-1C93-4D83-A160-D0C100B75C0C}");
+
+        private readonly Guid DcShGuid = Guid.Parse("{D18519B3-4B35-4D5A-8720-2593881615E5}");
+        private readonly Guid DcPgGuid = Guid.Parse("{D28519B3-4B35-4D5A-8720-2593881615E5}");
+        private readonly Guid DcMa4Guid = Guid.Parse("{D38519B3-4B35-4D5A-8720-2593881615E5}");
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,12 +63,21 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
 
             //Seed DC's
             SeedDataCentres(modelBuilder);
-
             //Seed Env's
             SeedEnvironments(modelBuilder);
-
             //Seed VLAN's
             SeedVlans(modelBuilder);
+
+
+            //Seed VM Sizes
+            SeedVmSizes(modelBuilder);
+            //Seed VM Types
+            SeedVmTypes(modelBuilder);
+            //Seed TimeZones
+            SeedTimeZones(modelBuilder);
+
+            //Seed VM Orders
+            SeedVmOrders(modelBuilder);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -55,16 +98,185 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
             return base.SaveChangesAsync(cancellationToken);
         }
 
+        private void SeedVmOrders(ModelBuilder model)
+        {
+            model.Entity<Domain.Entities.VmOrder>().HasData(new Domain.Entities.VmOrder
+            {
+                Id = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "Apache Focus in Dev",
+                Description = "VM Order - 3 Small RHEL 8 VMs for Apache Focus",
+                VmOrderPlaced = new DateTime(2025, 03, 12),
+                EnvironmentId = EnvDevGuid,
+                TimeZoneId = TimeZoneEuropeLondon,
+                PrimaryContactName = "John Doe",
+                PrimaryContactEmail = "john.doe@email.com",
+                TeamName = "Apache Focus Team"
+            });
+            model.Entity<Domain.Entities.VmOrderDetail>().HasData(new Domain.Entities.VmOrderDetail
+            {
+                Id = Guid.Parse("{B1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmOrderId = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmTypeId = VmTypeRhel8,
+                VmSizeId = VmSizeSmall
+            });
+            model.Entity<Domain.Entities.VmOrderDetail>().HasData(new Domain.Entities.VmOrderDetail
+            {
+                Id = Guid.Parse("{B2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmOrderId = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmTypeId = VmTypeRhel8,
+                VmSizeId = VmSizeSmall
+            });
+            model.Entity<Domain.Entities.VmOrderDetail>().HasData(new Domain.Entities.VmOrderDetail
+            {
+                Id = Guid.Parse("{B3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmOrderId = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmTypeId = VmTypeRhel8,
+                VmSizeId = VmSizeSmall
+            });
+
+
+            model.Entity<Domain.Entities.VmOrder>().HasData(new Domain.Entities.VmOrder
+            {
+                Id = Guid.Parse("{B1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "Apache Delta in Dev",
+                Description = "VM Order - 2 Medium RHEL 9 VMs for Apache Delta",
+                VmOrderPlaced = new DateTime(2025, 03, 15),
+                EnvironmentId = EnvDevGuid,
+                TimeZoneId = TimeZoneEuropeLondon,
+                PrimaryContactName = "Jane Doe",
+                PrimaryContactEmail = "jane.doe@email.com",
+                TeamName = "Apache Delta Team"
+            });
+            model.Entity<Domain.Entities.VmOrderDetail>().HasData(new Domain.Entities.VmOrderDetail
+            {
+                Id = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmOrderId = Guid.Parse("{B1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmTypeId = VmTypeRhel9,
+                VmSizeId = VmSizeMedium
+            });
+            model.Entity<Domain.Entities.VmOrderDetail>().HasData(new Domain.Entities.VmOrderDetail
+            {
+                Id = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmOrderId = Guid.Parse("{B1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                VmTypeId = VmTypeRhel9,
+                VmSizeId = VmSizeMedium
+            });
+        }
+
+        private void SeedVmTypes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain.Entities.VmType>().HasData(new Domain.Entities.VmType
+            {
+                Id = VmTypeRhel8,
+                Name = "RHEL 8",
+                Description = "Red Hat Enterprise 8",
+                IsEnabled = true,
+
+                OsType = "RHEL",
+                OsVersion = "8"
+            });
+            modelBuilder.Entity<Domain.Entities.VmType>().HasData(new Domain.Entities.VmType
+            {
+                Id = VmTypeRhel9,
+                Name = "RHEL 9",
+                Description = "Red Hat Enterprise 9",
+                IsEnabled = true,
+
+                OsType = "RHEL",
+                OsVersion = "9"
+            });
+            modelBuilder.Entity<Domain.Entities.VmType>().HasData(new Domain.Entities.VmType
+            {
+                Id = VmTypeRhel10,
+                Name = "RHEL 10",
+                Description = "Red Hat Enterprise 10",
+                IsEnabled = false,
+
+                OsType = "RHEL",
+                OsVersion = "10"
+            });
+        }
+
+        private void SeedVmSizes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain.Entities.VmSize>().HasData(new Domain.Entities.VmSize
+            {
+                Id = VmSizeSmall,
+                Name = "Small",
+                Description = "Small VM Size",
+                IsEnabled = true,
+
+                CpuCount = 2,
+                RamGb = 4,
+                HddGb = 10
+            });
+            modelBuilder.Entity<Domain.Entities.VmSize>().HasData(new Domain.Entities.VmSize
+            {
+                Id = VmSizeMedium,
+                Name = "Medium",
+                Description = "Medium VM Size",
+                IsEnabled = true,
+
+                CpuCount = 4,
+                RamGb = 8,
+                HddGb = 20
+            });
+            modelBuilder.Entity<Domain.Entities.VmSize>().HasData(new Domain.Entities.VmSize
+            {
+                Id = VmSizeLarge,
+                Name = "Large",
+                Description = "Large VM Size",
+                IsEnabled = false,
+
+                CpuCount = 8,
+                RamGb = 16,
+                HddGb = 40
+            });
+        }
+
+        private void SeedTimeZones(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain.Entities.TimeZone>().HasData(new Domain.Entities.TimeZone
+            {
+                Id = TimeZoneEuropeLondon,
+                Name = "Europe/London",
+                Description = "Europe/London",
+                IsEnabled = true,
+
+                Code = "GMT"
+            });
+        }
+
+
         private void SeedVlans(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Domain.Entities.Vlan>().HasData(new Domain.Entities.Vlan
             {
                 Id = Vlan113Guid,
-                Name = "ML-DEV-PG",
-                Description = "NEW VLAN in ML for DEV Deployments of VMs ...",
+                Name = "VLAN113",
+                Description = "VLAN in DEV",
                 IsEnabled = true,
 
                 EnvironmentId = EnvDevGuid
+            });
+            modelBuilder.Entity<Domain.Entities.Vlan>().HasData(new Domain.Entities.Vlan
+            {
+                Id = Vlan155Guid,
+                Name = "VLAN155",
+                Description = "VLAN in UAT",
+                IsEnabled = true,
+
+                EnvironmentId = EnvUatGuid
+            });
+
+            modelBuilder.Entity<Domain.Entities.Vlan>().HasData(new Domain.Entities.Vlan
+            {
+                Id = Vlan600Guid,
+                Name = "",
+                Description = "VLAN600",
+                IsEnabled = true,
+
+                EnvironmentId = EnvProdGuid
             });
         }
 
@@ -152,6 +364,5 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Location = "Manchester, UK"
             });
         }
-
     }
 }
