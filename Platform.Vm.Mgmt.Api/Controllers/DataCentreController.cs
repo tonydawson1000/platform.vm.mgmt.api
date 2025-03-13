@@ -67,14 +67,14 @@ namespace Platform.Vm.Mgmt.Api.Controllers
         }
 
 
-        [HttpPost(Name = "AddDataCentre")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<CreateDataCentreCommandResponse>> Create([FromBody] CreateDataCentreCommand createDataCentreCommand)
-        {
-            var response = await _mediator.Send(createDataCentreCommand);
+        //[HttpPost(Name = "AddDataCentre")]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
+        //[ProducesResponseType(StatusCodes.Status400BadRequest)]
+        //public async Task<ActionResult<CreateDataCentreCommandResponse>> Create([FromBody] CreateDataCentreCommand createDataCentreCommand)
+        //{
+        //    var response = await _mediator.Send(createDataCentreCommand);
 
-            return CreatedAtRoute("GetDataCentreById", new { id = response.DataCentreId }, response);
-        }
+        //    return CreatedAtRoute("GetDataCentreById", new { id = response.DataCentreId }, response);
+        //}
     }
 }

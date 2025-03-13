@@ -7,12 +7,15 @@ using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresLi
 using Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvironment;
 using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentDetail;
 using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentsList;
+using Platform.Vm.Mgmt.Application.Features.TimeZones.Queries.GetTimeZonesList;
 using Platform.Vm.Mgmt.Application.Features.Vlans.Commands.CreateVlan;
 using Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail;
 using Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlansList;
 using Platform.Vm.Mgmt.Application.Features.VmOrders.Commands.CreateVmOrder;
 using Platform.Vm.Mgmt.Application.Features.VmOrders.Queries.GetVmOrderDetail;
 using Platform.Vm.Mgmt.Application.Features.VmOrders.Queries.GetVmOrdersList;
+using Platform.Vm.Mgmt.Application.Features.VmSizes.Queries;
+using Platform.Vm.Mgmt.Application.Features.VmTypes.Queries.GetVmTypesList;
 
 
 namespace Platform.Vm.Mgmt.Application.Profiles
@@ -34,10 +37,13 @@ namespace Platform.Vm.Mgmt.Application.Profiles
             CreateMap<Domain.Entities.VmOrderDetail, CreateVmOrderDetailModel>().ReverseMap();
 
             //VmSize
+            CreateMap<Domain.Entities.VmSize, VmSizeListModel>().ReverseMap();
 
             //VmType
+            CreateMap<Domain.Entities.VmType, VmTypeListModel>().ReverseMap();
 
             //TimeZone
+            CreateMap<Domain.Entities.TimeZone, TimeZoneListModel>().ReverseMap();
 
             CreateMap<Domain.Entities.Vlan, VlanListModel>().ReverseMap();
             CreateMap<Domain.Entities.Vlan, VlanDetailModel>().ReverseMap();

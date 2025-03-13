@@ -35,7 +35,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool?>("IsEnabled")
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -54,6 +54,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("Sequence")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("DataCentres");
@@ -66,7 +69,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             Description = "Primary DC",
                             IsEnabled = true,
                             Location = "London, UK",
-                            Name = "Sov House"
+                            Name = "Sov House",
+                            Sequence = 1
                         },
                         new
                         {
@@ -75,7 +79,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             Description = "Secondary DC",
                             IsEnabled = true,
                             Location = "London, UK",
-                            Name = "Power Gate"
+                            Name = "Power Gate",
+                            Sequence = 2
                         },
                         new
                         {
@@ -84,7 +89,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             Description = "DC in the North",
                             IsEnabled = true,
                             Location = "Manchester, UK",
-                            Name = "MA-4"
+                            Name = "MA-4",
+                            Sequence = 3
                         });
                 });
 
@@ -108,7 +114,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool?>("IsEnabled")
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -188,6 +194,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
@@ -197,9 +204,10 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool?>("IsEnabled")
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -211,6 +219,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Sequence")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -224,7 +235,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Europe/London",
                             IsEnabled = true,
-                            Name = "Europe/London"
+                            Name = "Europe/London",
+                            Sequence = 1
                         });
                 });
 
@@ -248,7 +260,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                     b.Property<Guid>("EnvironmentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool?>("IsEnabled")
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -261,6 +273,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("Sequence")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -276,7 +291,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             Description = "VLAN in DEV",
                             EnvironmentId = new Guid("e1b64577-1c93-4d83-a160-d0c100b75c0c"),
                             IsEnabled = true,
-                            Name = "VLAN113"
+                            Name = "VLAN113",
+                            Sequence = 1
                         },
                         new
                         {
@@ -285,16 +301,18 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             Description = "VLAN in UAT",
                             EnvironmentId = new Guid("e3b64577-1c93-4d83-a160-d0c100b75c0c"),
                             IsEnabled = true,
-                            Name = "VLAN155"
+                            Name = "VLAN155",
+                            Sequence = 3
                         },
                         new
                         {
                             Id = new Guid("600d0837-e1e4-4078-8da3-9f62a4c33c58"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "VLAN600",
+                            Description = "VLAN in PROD",
                             EnvironmentId = new Guid("e4b64577-1c93-4d83-a160-d0c100b75c0c"),
                             IsEnabled = true,
-                            Name = ""
+                            Name = "VLAN600",
+                            Sequence = 4
                         });
                 });
 
@@ -490,7 +508,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                     b.Property<int>("HddGb")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsEnabled")
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -507,6 +525,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                     b.Property<int>("RamGb")
                         .HasColumnType("int");
 
+                    b.Property<int?>("Sequence")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("VmSizes");
@@ -521,7 +542,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             HddGb = 10,
                             IsEnabled = true,
                             Name = "Small",
-                            RamGb = 4
+                            RamGb = 4,
+                            Sequence = 1
                         },
                         new
                         {
@@ -532,7 +554,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             HddGb = 20,
                             IsEnabled = true,
                             Name = "Medium",
-                            RamGb = 8
+                            RamGb = 8,
+                            Sequence = 2
                         },
                         new
                         {
@@ -541,9 +564,22 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Large VM Size",
                             HddGb = 40,
-                            IsEnabled = false,
+                            IsEnabled = true,
                             Name = "Large",
-                            RamGb = 16
+                            RamGb = 16,
+                            Sequence = 3
+                        },
+                        new
+                        {
+                            Id = new Guid("a4b74577-1c93-4d83-a160-d0c100b75c0c"),
+                            CpuCount = 64,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Gigantic VM Size",
+                            HddGb = 500,
+                            IsEnabled = false,
+                            Name = "Gigantic",
+                            RamGb = 256,
+                            Sequence = 4
                         });
                 });
 
@@ -564,7 +600,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool?>("IsEnabled")
+                    b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastModifiedBy")
@@ -586,6 +622,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Sequence")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("VmTypes");
@@ -599,7 +638,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             IsEnabled = true,
                             Name = "RHEL 8",
                             OsType = "RHEL",
-                            OsVersion = "8"
+                            OsVersion = "8",
+                            Sequence = 1
                         },
                         new
                         {
@@ -609,7 +649,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             IsEnabled = true,
                             Name = "RHEL 9",
                             OsType = "RHEL",
-                            OsVersion = "9"
+                            OsVersion = "9",
+                            Sequence = 2
                         },
                         new
                         {
@@ -619,7 +660,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore.Migrations
                             IsEnabled = false,
                             Name = "RHEL 10",
                             OsType = "RHEL",
-                            OsVersion = "10"
+                            OsVersion = "10",
+                            Sequence = 3
                         });
                 });
 

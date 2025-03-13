@@ -1,8 +1,6 @@
-﻿using Platform.Vm.Mgmt.Domain.Common;
-
-namespace Platform.Vm.Mgmt.Domain.Entities
+﻿namespace Platform.Vm.Mgmt.Application.Features.TimeZones.Queries.GetTimeZonesList
 {
-    public class TimeZone : AuditableEntity
+    public class TimeZoneListModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

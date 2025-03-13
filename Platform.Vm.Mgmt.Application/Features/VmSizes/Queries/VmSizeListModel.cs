@@ -1,8 +1,6 @@
-﻿using Platform.Vm.Mgmt.Domain.Common;
-
-namespace Platform.Vm.Mgmt.Domain.Entities
+﻿namespace Platform.Vm.Mgmt.Application.Features.VmSizes.Queries
 {
-    public class TimeZone : AuditableEntity
+    public class VmSizeListModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -10,6 +8,8 @@ namespace Platform.Vm.Mgmt.Domain.Entities
         public bool IsEnabled { get; set; } = true;
         public int? Sequence { get; set; }
 
-        public string Code { get; set; } = string.Empty;
+        public int? CpuCount { get; set; }
+        public int? RamGb { get; set; }
+        public int? HddGb { get; set; }
     }
 }

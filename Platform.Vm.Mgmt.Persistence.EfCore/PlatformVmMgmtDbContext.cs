@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Platform.Vm.Mgmt.Domain.Common;
 
 namespace Platform.Vm.Mgmt.Persistence.EfCore
@@ -24,6 +25,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
         private readonly Guid VmSizeSmall = Guid.Parse("{A1B74577-1C93-4D83-A160-D0C100B75C0C}");
         private readonly Guid VmSizeMedium = Guid.Parse("{A2B74577-1C93-4D83-A160-D0C100B75C0C}");
         private readonly Guid VmSizeLarge = Guid.Parse("{A3B74577-1C93-4D83-A160-D0C100B75C0C}");
+        private readonly Guid VmSizeGigantic = Guid.Parse("{A4B74577-1C93-4D83-A160-D0C100B75C0C}");
 
         private readonly Guid VmTypeRhel8 = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}");
         private readonly Guid VmTypeRhel9 = Guid.Parse("{A2B64577-1C93-4D83-A160-D0C100B75C0C}");
@@ -171,6 +173,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "RHEL 8",
                 Description = "Red Hat Enterprise 8",
                 IsEnabled = true,
+                Sequence = 1,
 
                 OsType = "RHEL",
                 OsVersion = "8"
@@ -181,6 +184,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "RHEL 9",
                 Description = "Red Hat Enterprise 9",
                 IsEnabled = true,
+                Sequence = 2,
 
                 OsType = "RHEL",
                 OsVersion = "9"
@@ -191,6 +195,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "RHEL 10",
                 Description = "Red Hat Enterprise 10",
                 IsEnabled = false,
+                Sequence = 3,
 
                 OsType = "RHEL",
                 OsVersion = "10"
@@ -205,6 +210,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Small",
                 Description = "Small VM Size",
                 IsEnabled = true,
+                Sequence = 1,
 
                 CpuCount = 2,
                 RamGb = 4,
@@ -216,6 +222,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Medium",
                 Description = "Medium VM Size",
                 IsEnabled = true,
+                Sequence= 2,
 
                 CpuCount = 4,
                 RamGb = 8,
@@ -226,11 +233,24 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Id = VmSizeLarge,
                 Name = "Large",
                 Description = "Large VM Size",
-                IsEnabled = false,
+                IsEnabled = true,
+                Sequence = 3,
 
                 CpuCount = 8,
                 RamGb = 16,
                 HddGb = 40
+            });
+            modelBuilder.Entity<Domain.Entities.VmSize>().HasData(new Domain.Entities.VmSize
+            {
+                Id = VmSizeGigantic,
+                Name = "Gigantic",
+                Description = "Gigantic VM Size",
+                IsEnabled = false,
+                Sequence = 4,
+
+                CpuCount = 64,
+                RamGb = 256,
+                HddGb = 500
             });
         }
 
@@ -242,6 +262,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Europe/London",
                 Description = "Europe/London",
                 IsEnabled = true,
+                Sequence = 1,
 
                 Code = "GMT"
             });
@@ -256,15 +277,18 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "VLAN113",
                 Description = "VLAN in DEV",
                 IsEnabled = true,
+                Sequence = 1,
 
                 EnvironmentId = EnvDevGuid
             });
+
             modelBuilder.Entity<Domain.Entities.Vlan>().HasData(new Domain.Entities.Vlan
             {
                 Id = Vlan155Guid,
                 Name = "VLAN155",
                 Description = "VLAN in UAT",
                 IsEnabled = true,
+                Sequence = 3,
 
                 EnvironmentId = EnvUatGuid
             });
@@ -272,9 +296,10 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
             modelBuilder.Entity<Domain.Entities.Vlan>().HasData(new Domain.Entities.Vlan
             {
                 Id = Vlan600Guid,
-                Name = "",
-                Description = "VLAN600",
+                Name = "VLAN600",
+                Description = "VLAN in PROD",
                 IsEnabled = true,
+                Sequence = 4,
 
                 EnvironmentId = EnvProdGuid
             });
@@ -288,9 +313,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Development",
                 Description = "Houses resources required for development purposes, including (but not limited to) day-to-day development, automated integration (INT) testing, systems integration testing (SIT), internal demos.",
                 IsEnabled = true,
+                Sequence = 1,
 
                 Tier = 4,
-                Sequence = 1,
 
                 DataCentreId = DcPgGuid
             });
@@ -301,9 +326,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Operational Acceptance Testing",
                 Description = "Provides the environment for operational acceptance testing, including failover and performance testing.",
                 IsEnabled = true,
+                Sequence = 2,
 
                 Tier = 3,
-                Sequence = 2,
 
                 DataCentreId = DcPgGuid
             });
@@ -314,9 +339,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "User Acceptance Testing",
                 Description = "Final verification testing for software changes from customer end-users.",
                 IsEnabled = true,
+                Sequence = 3,
 
                 Tier = 2,
-                Sequence = 3,
 
                 DataCentreId = DcPgGuid
             });
@@ -327,9 +352,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Production Systems",
                 Description = "Live operational environment at the very highest level of isolation. This houses the services that customers pay to use at a 99.9% availability SLA.",
                 IsEnabled = true,
+                Sequence = 4,
 
                 Tier = 1,
-                Sequence = 4,
 
                 DataCentreId = DcShGuid
             });
@@ -343,6 +368,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Sov House",
                 Description = "Primary DC",
                 IsEnabled = true,
+                Sequence = 1,
                 Location = "London, UK"
             });
 
@@ -352,6 +378,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "Power Gate",
                 Description = "Secondary DC",
                 IsEnabled = true,
+                Sequence = 2,
                 Location = "London, UK"
             });
 
@@ -361,6 +388,7 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 Name = "MA-4",
                 Description = "DC in the North",
                 IsEnabled = true,
+                Sequence = 3,
                 Location = "Manchester, UK"
             });
         }
