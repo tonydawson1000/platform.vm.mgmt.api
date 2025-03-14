@@ -9,6 +9,10 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
         public PlatformVmMgmtDbContext(DbContextOptions<PlatformVmMgmtDbContext> options)
             : base(options) { }
 
+        public DbSet<Domain.Entities.HyperVCluster> HyperVClusters { get; set; }
+        public DbSet<Domain.Entities.HyperVNode> HyperVNodes { get; set; }
+
+
         public DbSet<Domain.Entities.VmOrderDetail> VmOrderDetails { get; set; }
         public DbSet<Domain.Entities.VmOrder> VmOrders { get; set; }
 
@@ -80,6 +84,9 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
 
             //Seed VM Orders
             SeedVmOrders(modelBuilder);
+
+            //Seed HyperV Clusters
+            SeedHyperVClusters(modelBuilder);
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -98,6 +105,217 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
             }
 
             return base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void SeedHyperVClusters(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Domain.Entities.HyperVCluster>().HasData(new Domain.Entities.HyperVCluster
+            {
+                Id = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "PG Dev Servers",
+                Description = "HyperV Cluster - HostGroups - PGDevServers"
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{E1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVDEVPG01",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PGDevServers",
+                HostName = "HVDEVPG01",
+                IsEnabled = true,
+                Sequence = 1,
+                HyperVClusterId = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{E2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVDEVPG02",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PGDevServers",
+                HostName = "HVDEVPG02",
+                IsEnabled = true,
+                Sequence = 2,
+                HyperVClusterId = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{E3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVDEVPG03",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PGDevServers",
+                HostName = "HVDEVPG03",
+                IsEnabled = true,
+                Sequence = 3,
+                HyperVClusterId = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{E4B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVDEVPG04",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PGDevServers",
+                HostName = "HVDEVPG04",
+                IsEnabled = true,
+                Sequence = 4,
+                HyperVClusterId = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{E5B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVDEVPG05",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PGDevServers",
+                HostName = "HVDEVPG05",
+                IsEnabled = true,
+                Sequence = 5,
+                HyperVClusterId = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{E6B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVDEVPG06",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PGDevServers",
+                HostName = "HVDEVPG06",
+                IsEnabled = true,
+                Sequence = 6,
+                HyperVClusterId = Guid.Parse("{C1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+
+            modelBuilder.Entity<Domain.Entities.HyperVCluster>().HasData(new Domain.Entities.HyperVCluster
+            {
+                Id = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "PG App Servers",
+                Description = "HyperV Cluster - HostGroups - App/UAT/CERT/AZDO Servers"
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{A1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPPG01",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - App/UAT/CERT/AZDO Servers",
+                HostName = "HVAPPPG01",
+                IsEnabled = true,
+                Sequence = 1,
+                HyperVClusterId = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{A2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPPG02",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - App/UAT/CERT/AZDO Servers",
+                HostName = "HVAPPPG02",
+                IsEnabled = true,
+                Sequence = 2,
+                HyperVClusterId = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{A3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPPG03",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - App/UAT/CERT/AZDO Servers",
+                HostName = "HVAPPPG03",
+                IsEnabled = true,
+                Sequence = 3,
+                HyperVClusterId = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{A4B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPPG04",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - App/UAT/CERT/AZDO Servers",
+                HostName = "HVAPPPG04",
+                IsEnabled = true,
+                Sequence = 4,
+                HyperVClusterId = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{A5B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPPG05",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - App/UAT/CERT/AZDO Servers",
+                HostName = "HVAPPPG05",
+                IsEnabled = true,
+                Sequence = 5,
+                HyperVClusterId = Guid.Parse("{C2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcPgGuid
+            });
+
+            modelBuilder.Entity<Domain.Entities.HyperVCluster>().HasData(new Domain.Entities.HyperVCluster
+            {
+                Id = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "SH Prod Servers",
+                Description = "HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers"
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{B1B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPSH01",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers",
+                HostName = "HVAPPSH01",
+                IsEnabled = true,
+                Sequence = 1,
+                HyperVClusterId = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcShGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{B2B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPSH02",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers",
+                HostName = "HVAPPSH02",
+                IsEnabled = true,
+                Sequence = 2,
+                HyperVClusterId = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcShGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{B3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPSH03",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers",
+                HostName = "HVAPPSH03",
+                IsEnabled = true,
+                Sequence = 3,
+                HyperVClusterId = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcShGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{B4B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPSH04",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers",
+                HostName = "HVAPPSH04",
+                IsEnabled = true,
+                Sequence = 4,
+                HyperVClusterId = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcShGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{B5B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPSH05",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers",
+                HostName = "HVAPPSH05",
+                IsEnabled = true,
+                Sequence = 5,
+                HyperVClusterId = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcShGuid
+            });
+            modelBuilder.Entity<Domain.Entities.HyperVNode>().HasData(new Domain.Entities.HyperVNode
+            {
+                Id = Guid.Parse("{B6B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                Name = "HVAPPSH06",
+                Description = "HyperV Node - HyperV Cluster - HostGroups - PRODTMC/MMSSH/SHTechOps Servers",
+                HostName = "HVAPPSH06",
+                IsEnabled = true,
+                Sequence = 6,
+                HyperVClusterId = Guid.Parse("{C3B64577-1C93-4D83-A160-D0C100B75C0C}"),
+                DataCentreId = DcShGuid
+            });
         }
 
         private void SeedVmOrders(ModelBuilder model)

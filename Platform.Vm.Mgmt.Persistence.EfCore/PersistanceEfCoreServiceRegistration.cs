@@ -14,6 +14,8 @@ namespace Platform.Vm.Mgmt.Persistence.EfCore
                 options.UseSqlServer(configuration.GetConnectionString("PlatformVmMgmtConnectionString")));
 
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            
+            services.AddScoped<IHyperVClusterRepository, HyperVClusterRepository>();
 
             services.AddScoped<IVmOrderRepository, VmOrderRepository>();
 

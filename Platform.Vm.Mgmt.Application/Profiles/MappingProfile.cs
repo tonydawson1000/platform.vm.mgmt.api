@@ -7,6 +7,8 @@ using Platform.Vm.Mgmt.Application.Features.DataCentres.Queries.GetDataCentresLi
 using Platform.Vm.Mgmt.Application.Features.Environments.Commands.CreateEnvironment;
 using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentDetail;
 using Platform.Vm.Mgmt.Application.Features.Environments.Queries.GetEnvironmentsList;
+using Platform.Vm.Mgmt.Application.Features.HyperVClusters.Queries.GetHyperVClusterDetail;
+using Platform.Vm.Mgmt.Application.Features.HyperVClusters.Queries.GetHyperVClustersList;
 using Platform.Vm.Mgmt.Application.Features.TimeZones.Queries.GetTimeZonesList;
 using Platform.Vm.Mgmt.Application.Features.Vlans.Commands.CreateVlan;
 using Platform.Vm.Mgmt.Application.Features.Vlans.Queries.GetVlanDetail;
@@ -17,13 +19,21 @@ using Platform.Vm.Mgmt.Application.Features.VmOrders.Queries.GetVmOrdersList;
 using Platform.Vm.Mgmt.Application.Features.VmSizes.Queries;
 using Platform.Vm.Mgmt.Application.Features.VmTypes.Queries.GetVmTypesList;
 
-
 namespace Platform.Vm.Mgmt.Application.Profiles
 {
     public class MappingProfile : Profile
     {
         public MappingProfile()
         {
+            //HyperVCluster
+            CreateMap<Domain.Entities.HyperVCluster, HyperVClusterListModel>()
+                .ForMember(dest => dest.HyperVNodeListModels, opt => opt.MapFrom(src => src.HyperVNodes));
+            CreateMap<Domain.Entities.HyperVCluster, HyperVClusterDetailModel>()
+                .ForMember(dest => dest.HyperVNodeListModels, opt => opt.MapFrom(src => src.HyperVNodes));
+
+            CreateMap<Domain.Entities.HyperVNode, HyperVNodeListModel>().ReverseMap();
+
+            //VmOrder
             CreateMap<Domain.Entities.VmOrder, VmOrderListModel>()
                 .ForMember(dest => dest.VmOrderDetailListModels, opt => opt.MapFrom(src => src.VmOrderDetails));
             CreateMap<Domain.Entities.VmOrder, VmOrderDetailModel>()

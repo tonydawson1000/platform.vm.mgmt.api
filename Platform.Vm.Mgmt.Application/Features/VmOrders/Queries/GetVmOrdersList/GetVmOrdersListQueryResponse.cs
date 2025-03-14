@@ -2,7 +2,7 @@
 
 namespace Platform.Vm.Mgmt.Application.Features.VmOrders.Queries.GetVmOrdersList
 {
-    public class GetVmOrdersListQueryResponse: BaseResponse
+    public class GetVmOrdersListQueryResponse : BaseResponse
     {
         public GetVmOrdersListQueryResponse() : base() { }
 
